@@ -31,7 +31,7 @@ public class Account extends AbstractEntity {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public static boolean matches(String password, String hashedPassword) {
-        return BCrypt.checkpw(password, hashedPassword);
+    public boolean validatePassword(String password) {
+        return BCrypt.checkpw(password, this.password);
     }
 }

@@ -24,21 +24,22 @@ public class Session {
     private long id;
     private long accountId;
     private Role role;
-    private Date expiredAt;
+    private Instant expiredAt;
 
-    public Session(long accountId, Date expiredAt) {
+    public Session(long accountId, Role role, Instant expiredAt) {
         this.accountId = accountId;
+        this.role = role;
         this.expiredAt = expiredAt;
     }
 
     public String genAccessToken(String secret) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", getAccountId());
-        claims.put("rold", getRole());
+        claims.put("role", getRole());
         //way to create access token
         String token = Jwts.builder()
                 .setId(String.valueOf(getId()))
-                .setExpiration(Date.from(getExpiredAt().toInstant()))
+                .setExpiration(Date.from(getExpiredAt()))
                 .setIssuedAt(new Date())
                 .claim("claims", claims)
                 .signWith(SignatureAlgorithm.HS512, secret)
