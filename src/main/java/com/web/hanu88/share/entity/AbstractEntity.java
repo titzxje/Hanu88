@@ -12,8 +12,12 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractEntity {
     @CreatedDate
-    private Date createdDate;
+    private Date createdAt;
 
     @LastModifiedDate
     private Date updatedAt;
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
 }

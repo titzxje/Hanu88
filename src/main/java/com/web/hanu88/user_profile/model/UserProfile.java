@@ -47,6 +47,14 @@ public class UserProfile extends AbstractEntity {
         this.roundPlayed += 1;
     }
 
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
     private void setAccountId(long accountId) {
         this.accountId = accountId;
     }

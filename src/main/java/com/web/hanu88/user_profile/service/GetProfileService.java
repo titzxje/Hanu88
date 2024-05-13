@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @AllArgsConstructor
 public class GetProfileService {
@@ -29,6 +31,7 @@ public class GetProfileService {
         private long balancePoint;
         private String avatarUrl;
         private long roundPlayed;
+        private Date createdAt;
     }
 
     public Result<?> getUserProfile(Input input) {
@@ -41,7 +44,8 @@ public class GetProfileService {
                 userProfile.getDisplayName(),
                 userProfile.getBalancePoint(),
                 userProfile.getAvatarUrl(),
-                userProfile.getRoundPlayed()
+                userProfile.getRoundPlayed(),
+                userProfile.getCreatedAt()
                 )
         );
     }

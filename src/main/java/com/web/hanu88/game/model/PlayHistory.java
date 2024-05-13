@@ -17,9 +17,9 @@ public class PlayHistory extends AbstractEntity {
     private long roundNumber;
     private TypeBet typeBet;
     private long amount;
-    private long result;
+    private int result;
 
-    public static PlayHistory create(long accountId, long roundNumber, TypeBet typeBet, long amount, long result) {
+    public static PlayHistory create(long accountId, long roundNumber, TypeBet typeBet, long amount, int result) {
         PlayHistory playHistory = new PlayHistory();
         playHistory.accountId = accountId;
         playHistory.roundNumber = roundNumber;
