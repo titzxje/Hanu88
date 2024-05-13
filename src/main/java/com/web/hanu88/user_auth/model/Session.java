@@ -36,6 +36,7 @@ public class Session {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", getAccountId());
         claims.put("role", getRole());
+        claims.put("session", getId());
         //way to create access token
         String token = Jwts.builder()
                 .setId(String.valueOf(getId()))
