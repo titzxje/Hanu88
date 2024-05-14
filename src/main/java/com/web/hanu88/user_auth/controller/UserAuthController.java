@@ -5,6 +5,9 @@ import com.web.hanu88.user_auth.model.Role;
 import com.web.hanu88.user_auth.model.Session;
 import com.web.hanu88.user_auth.service.LoginService;
 import com.web.hanu88.user_auth.service.RegisterService;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +26,13 @@ public class UserAuthController {
     private RegisterService registerService;
     @Autowired
     private Environment env;
-
-    public UserAuthController() {
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class Input {
+        public String username;
+        public String email;
+        public String password;
     }
 
     @PostMapping(value = "/login")
@@ -33,16 +41,16 @@ public class UserAuthController {
     }
 
     @PostMapping(value = "/register")
-    public Result<?> register(@RequestBody RegisterService.Input registerInput){
-        RegisterService.Input input = new RegisterService.Input(registerInput.username,registerInput.email,registerInput.password, Role.PLAYER);
-        return registerService.register(input);
+    public Result<?> register(@RequestBody Input input){
+        RegisterService.Input input1 = new RegisterService.Input(input.username,input.email,input.password, Role.PLAYER);
+        return registerService.register(input1);
     }
     @PostMapping(value = "register/admin")
-    public Result<?> registerAdmin(@RequestHeader("access-token") String accessToken, @RequestBody RegisterService.Input registerInput) {
+    public Result<?> registerAdmin(@RequestHeader("access-token") String accessToken, @RequestBody Input input) {
         Map<String, Object> userData = Session.decodeAccessToken(accessToken, env.getProperty("auth.secret"));
         if (userData.get("Role") == "ADMIN"){
-            RegisterService.Input input = new RegisterService.Input(registerInput.username,registerInput.email,registerInput.password, Role.ADMIN);
-            return registerService.register(input);
+            RegisterService.Input input1 = new RegisterService.Input(input.username,input.email,input.password, Role.ADMIN);
+            return registerService.register(input1);
         }
         return Result.failed("Only admin can call this api");
     }

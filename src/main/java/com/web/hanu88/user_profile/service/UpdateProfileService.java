@@ -20,6 +20,7 @@ public class UpdateProfileService {
         public long accountId;
         public String displayName;
         public String avatarUrl;
+
     }
 
     public Result<?> updateProfile(Input input) {
