@@ -13,13 +13,15 @@ public class StatisticService {
     private final PlayHistoryRepository playHistoryRepository;
 
     @Data
-    @NoArgsConstructor
     @AllArgsConstructor
-    public static class Input {
-        public long accountId;
+    @NoArgsConstructor
+    public static class Output {
+        public long totalPlayer;
+        public long totalGamePlayed;
+        public long totalRewardToday;
     }
 
-    public Result<?> statistic(Input input) {
+    public Result<?> statistic() {
 
         return Result.success("");
     }
