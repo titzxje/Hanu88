@@ -34,7 +34,7 @@ public class RegisterService {
             return Result.failed("Invalid password");
         }
         String encryptedPassword = Account.encryptPassword(input.password);
-        Account newAccount = new Account(input.username, input.password, input.role);
+        Account newAccount = new Account(input.username, encryptedPassword, input.role);
         UserProfile userProfile = UserProfile.create(newAccount.getId(), input.email);
         this.accountRepository.save(newAccount);
         this.userProfileRepository.save(userProfile);
