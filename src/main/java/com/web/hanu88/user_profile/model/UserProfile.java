@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
+
 @Entity
 @Table(name = "user_profile")
 @Getter
@@ -19,6 +22,7 @@ public class UserProfile extends AbstractEntity {
     private long balancePoint;
     private String avatarUrl;
     private long roundPlayed;
+    private Date lastFaucet;
 
     public static UserProfile create(long accountId, String email) {
         UserProfile userProfile = new UserProfile();
