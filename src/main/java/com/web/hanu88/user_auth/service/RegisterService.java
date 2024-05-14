@@ -35,8 +35,9 @@ public class RegisterService {
         }
         String encryptedPassword = Account.encryptPassword(input.password);
         Account newAccount = new Account(input.username, encryptedPassword, input.role);
-        UserProfile userProfile = UserProfile.create(newAccount.getId(), input.email);
         this.accountRepository.save(newAccount);
+        Account getNewAccount = accountRepository.findByUsername(input.username);
+        UserProfile userProfile = UserProfile.create(getNewAccount.getId(), input.email);
         this.userProfileRepository.save(userProfile);
         return Result.success(null);
     }
