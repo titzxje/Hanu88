@@ -3,9 +3,16 @@ package com.web.hanu88.game.service;
 import com.web.hanu88.game.model.PlayHistory;
 import com.web.hanu88.game.model.TypeBet;
 import com.web.hanu88.game.repository.PlayHistoryRepository;
+import com.web.hanu88.market.model.Effect;
+import com.web.hanu88.market.model.Order;
+import com.web.hanu88.market.model.UserOrder;
+import com.web.hanu88.market.repository.OrderRepository;
+import com.web.hanu88.market.repository.UserOrderRepository;
 import com.web.hanu88.share.entity.Result;
 import com.web.hanu88.user_profile.model.UserProfile;
 import com.web.hanu88.user_profile.repository.UserProfileRepository;
+
+import java.util.List;
 import java.util.Random;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +25,8 @@ import org.springframework.stereotype.Service;
 public class PlayService {
     private final PlayHistoryRepository playHistoryRepository;
     private final UserProfileRepository userProfileRepository;
+    private final UserOrderRepository userOrderRepository;
+    private final OrderRepository orderRepository;
     private final Environment env;
 
     @Data
@@ -42,6 +51,19 @@ public class PlayService {
     public Result<?> bet(Input input) throws Exception {
         try {
             UserProfile userProfile = this.userProfileRepository.findByAccountId(input.accountId);
+            List<UserOrder> userOrders = this.userOrderRepository.findAllByAccountId(input.accountId);
+            long extra = 1;
+            if (!userOrders.isEmpty()) {
+                for (UserOrder userOrder : userOrders) {
+                    Order order = this.orderRepository.findById(userOrder.getOrderId());
+                    if(order.getEffect() == Effect.X2) {
+                        extra *= 2;
+                    }
+                    if(order.getEffect() == Effect.X4) {
+                        extra *= 4;
+                    }
+                }
+            }
             userProfile.decreaseBalance(input.amount);
             long roundNumber = userProfile.getRoundPlayed() + 1;
             int[] dices = getResult();
@@ -52,10 +74,10 @@ public class PlayService {
             boolean isWinning = false;
             long rewardAmount = 0;
             if ((input.typeBet == TypeBet.UNDER && result <= 6) || (input.typeBet == TypeBet.OVER && result >= 8)) {
-                rewardAmount = input.amount * Long.parseLong(env.getProperty("reward.normal.ratio"));
+                rewardAmount = input.amount * Long.parseLong(env.getProperty("reward.normal.ratio")) * extra;
                 isWinning = true;
             } else if (input.typeBet == TypeBet.LUCKY && result == 7) {
-                rewardAmount = input.amount * Long.parseLong(env.getProperty("reward.lucky.ratio"));
+                rewardAmount = input.amount * Long.parseLong(env.getProperty("reward.lucky.ratio")) * extra;
                 isWinning = true;
             }
             userProfile.increaseBalance(rewardAmount);

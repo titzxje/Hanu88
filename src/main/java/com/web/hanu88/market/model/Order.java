@@ -7,27 +7,29 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "order")
+@Table(name = "market")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Order extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long orderId;
+    private long id;
     private String name;
     private String description;
     private String url;
     private Effect effect;
     private long pricePoint;
     private Status status;
+    private long totalEffectTime;
 
-    public Order(String name, String description, String url, Effect effect, long pricePoint, Status status) {
+    public Order(String name, String description, String url, Effect effect, long pricePoint, Status status, long totalEffectTime) {
         this.name = name;
         this.description = description;
         this.url = url;
         this.effect = effect;
         this.pricePoint = pricePoint;
         this.status = status;
+        this.totalEffectTime = totalEffectTime;
     }
 }

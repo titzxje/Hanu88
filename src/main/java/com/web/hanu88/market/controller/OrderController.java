@@ -34,13 +34,14 @@ public class OrderController {
         public String url;
         public long pricePoint;
         public Effect effect;
+        public long totalEffectTime;
     }
 
     @PostMapping(value = "/createOrder")
     public Result<?> createOrder(@RequestHeader("access-token") String accessToken, @RequestBody Input input){
         Map<String, Object> userData = Session.decodeAccessToken(accessToken, env.getProperty("auth.secret"));
         if (Objects.equals(userData.get("role").toString(), String.valueOf(Role.ADMIN))){
-            CreateOrder.Input input1 = new CreateOrder.Input(input.name,input.description,input.url,input.pricePoint,input.effect);
+            CreateOrder.Input input1 = new CreateOrder.Input(input.name,input.description,input.url,input.pricePoint,input.effect, input.totalEffectTime);
             return createOrder.createOrder(input1);
         }
         return Result.failed("Only admin can call this api");

@@ -24,9 +24,10 @@ public class CreateOrder {
         public String url;
         public long pricePoint;
         public Effect effect;
+        public long totalEffectTime;
     }
     public Result<?> createOrder(Input input){
-        Order newOrder = new Order(input.name,input.description,input.url,input.effect,input.pricePoint,Status.CREATED);
+        Order newOrder = new Order(input.name,input.description,input.url,input.effect,input.pricePoint,Status.CREATED, input.totalEffectTime);
         orderRepository.save(newOrder);
         return Result.success(null);
     }

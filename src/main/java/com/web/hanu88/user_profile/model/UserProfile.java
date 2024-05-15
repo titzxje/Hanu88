@@ -28,6 +28,7 @@ public class UserProfile extends AbstractEntity {
         UserProfile userProfile = new UserProfile();
         userProfile.setAccountId(accountId);
         userProfile.setEmail(email);
+        userProfile.setInitBalance();
         return userProfile;
     }
 
@@ -65,5 +66,9 @@ public class UserProfile extends AbstractEntity {
 
     private void setEmail(String email) {
         this.email = email;
+    }
+
+    private void setInitBalance() {
+        this.balancePoint = 1000000;
     }
 }

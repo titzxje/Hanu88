@@ -34,7 +34,7 @@ public class Session {
 
     public String genAccessToken(String secret) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", getAccountId());
+        claims.put("accountId", getAccountId());
         claims.put("role", getRole());
         claims.put("session", getId());
         //way to create access token
