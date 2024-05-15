@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
+import java.util.Objects;
 
 
 @RestController
@@ -48,7 +49,7 @@ public class UserAuthController {
     @PostMapping(value = "register/admin")
     public Result<?> registerAdmin(@RequestHeader("access-token") String accessToken, @RequestBody Input input) {
         Map<String, Object> userData = Session.decodeAccessToken(accessToken, env.getProperty("auth.secret"));
-        if (userData.get("Role") == "ADMIN"){
+        if (Objects.equals(userData.get("role").toString(), String.valueOf(Role.ADMIN))){
             RegisterService.Input input1 = new RegisterService.Input(input.username,input.email,input.password, Role.ADMIN);
             return registerService.register(input1);
         }

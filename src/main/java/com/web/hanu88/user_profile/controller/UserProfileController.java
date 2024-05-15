@@ -22,8 +22,6 @@ public class UserProfileController {
     @Autowired
     private Environment env;
 
-
-
     @PostMapping(value = "/getProfile")
     public Result<?> getProfile(@RequestHeader("access-token") String accessToken){
         Map<String, Object> userData = Session.decodeAccessToken(accessToken, env.getProperty("auth.secret"));
