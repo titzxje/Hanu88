@@ -23,11 +23,10 @@ public class CreateOrder {
         public String description;
         public String url;
         public long pricePoint;
-        public Status status;
         public Effect effect;
     }
     public Result<?> createOrder(Input input){
-        Order newOrder = new Order(input.name,input.description,input.url,input.effect,input.pricePoint,input.status);
+        Order newOrder = new Order(input.name,input.description,input.url,input.effect,input.pricePoint,Status.CREATED);
         orderRepository.save(newOrder);
         return Result.success(null);
     }

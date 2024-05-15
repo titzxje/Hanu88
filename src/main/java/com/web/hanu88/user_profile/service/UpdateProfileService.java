@@ -34,6 +34,7 @@ public class UpdateProfileService {
         if (input.avatarUrl != null) {
             userProfile.setAvatarUrl(input.avatarUrl);
         }
+        userProfileRepository.save(userProfile);
         return Result.success("Update Successfully");
     }
 }

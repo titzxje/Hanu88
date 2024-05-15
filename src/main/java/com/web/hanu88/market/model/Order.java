@@ -1,17 +1,20 @@
 package com.web.hanu88.market.model;
 
+import com.web.hanu88.share.entity.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "user_profile")
+@Table(name = "order")
 @Getter
+@Setter
 @NoArgsConstructor
-public class Order {
+public class Order extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long orderId;
     private String name;
     private String description;
     private String url;

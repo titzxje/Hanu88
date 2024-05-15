@@ -28,7 +28,8 @@ public class DeleteOrder {
         if (order == null){
             return Result.failed("This order not found");
         }
-        orderRepository.delete(order);
+        order.setStatus(Status.DELETED);
+        orderRepository.save(order);
         return Result.success(null);
     }
 }
