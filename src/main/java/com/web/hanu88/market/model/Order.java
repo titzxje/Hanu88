@@ -17,9 +17,9 @@ public class Order {
     private String url;
     private Effect effect;
     private long pricePoint;
-    private String status;
+    private Status status;
 
-    public Order(String name, String description, String url, Effect effect, long pricePoint, String status) {
+    public Order(String name, String description, String url, Effect effect, long pricePoint, Status status) {
         this.name = name;
         this.description = description;
         this.url = url;
