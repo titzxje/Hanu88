@@ -4,6 +4,7 @@ import com.web.hanu88.market.model.Effect;
 import com.web.hanu88.market.model.Status;
 import com.web.hanu88.market.service.CreateOrder;
 import com.web.hanu88.market.service.DeleteOrder;
+import com.web.hanu88.market.service.GetAllOrder;
 import com.web.hanu88.share.entity.Result;
 import com.web.hanu88.user_auth.model.Role;
 import com.web.hanu88.user_auth.model.Session;
@@ -23,6 +24,8 @@ public class OrderController {
     private CreateOrder createOrder;
     @Autowired
     private DeleteOrder deleteOrder;
+    @Autowired
+    private GetAllOrder getAllOrder;
     @Autowired
     private Environment env;
     @Data
@@ -54,4 +57,9 @@ public class OrderController {
         }
         return Result.failed("Only admin can call this api");
     }
+    @GetMapping(value = "/getAllOrder")
+    public Result<?> getAllOrder(){
+        return getAllOrder.getAllOrder();
+    }
+
 }
